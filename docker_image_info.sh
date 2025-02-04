@@ -19,7 +19,7 @@ fi
 for CONTAINER_ID in $CONTAINER_IDS; do
   echo "Информация по контейнеру $CONTAINER_ID:"
   
-# Извлекаем и выводим ключевые данные
+  # Извлекаем и выводим ключевые данные
   docker inspect --format='
 ID: {{.Id}}
 Имя: {{.Name}}
@@ -29,5 +29,10 @@ ID: {{.Id}}
 Команда: {{.Config.Cmd}}
 Порты: {{.NetworkSettings.Ports}}
 IP-адрес: {{.NetworkSettings.Networks}}{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}
+MAC: {{.NetworkSettings.Networks}}{{range .NetworkSettings.Networks}}{{.MacAddress}}{{end}}
+Шлюз: {{.NetworkSettings.Networks}}{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}
+Метки: {{.Config.Labels}}
+Рестарт политика: {{.HostConfig.RestartPolicy.Name}}
+Привилегии: {{.HostConfig.Privileged}}
 ' "$CONTAINER_ID"
 done
